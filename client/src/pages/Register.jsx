@@ -39,7 +39,7 @@ const Register = ({ setIsLoggedIn }) => {
 
   const handleGoogleResponse = async (response) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/google-register', {
+      const res = await axios.post('https://trello-clone-backend-three.vercel.app/api/google-register', {
         token: response.credential,
       });
 
@@ -60,7 +60,7 @@ const Register = ({ setIsLoggedIn }) => {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/register', formData);
+      const res = await axios.post('https://trello-clone-backend-three.vercel.app/api/register', formData);
       localStorage.setItem('token', res.data.token);
       setIsLoggedIn(true);
       navigate('/home');
