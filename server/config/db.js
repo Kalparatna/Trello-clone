@@ -1,21 +1,20 @@
 // config/db.js
 const mongoose = require('mongoose');
 
-let isConnected = false;
-
 const connectDB = async () => {
-  if (isConnected) return;
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    if (mongoose.connections[0].readyState) {
+      console.log('Already connected to MongoDB');
+      return;
+    }
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-
-    isConnected = true;
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    throw error;
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+    process.exit(1);
   }
 };
 
