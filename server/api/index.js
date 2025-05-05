@@ -1,5 +1,41 @@
 // api/index.js
-const app = require('./server');  // Import the Express app
-const serverless = require('serverless-http');  // Import serverless-http
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
+const boardRoutes = require('./routes/boards');
+require('dotenv').config();
 
-module.exports.handler = serverless(app);  // Wrap the app with serverless-http for Vercel
+const app = express();
+
+// Connect to MongoDB
+connectDB();
+
+// Middleware
+app.use(cors({
+  origin: 'http://localhost:5173', // or your frontend URL
+  credentials: true
+}));
+app.use(express.json());
+app.use(cookieParser());
+
+// Routes
+app.use('/api', authRoutes);
+app.use('/api/boards', boardRoutes);
+
+// Default Route
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
+// Run locally: only call listen if we are running locally (not in Vercel)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
