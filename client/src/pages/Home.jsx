@@ -417,7 +417,6 @@ export default function Home() {
                 
                 {/* Create New Board */}
                 <button 
-                  onClick={() => setShowCreateBoardModal(true)}
                   className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow bg-gray-50 flex items-center justify-center h-[8.5rem] cursor-pointer"
                   aria-label="Create new board"
                 >
