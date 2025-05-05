@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -16,9 +17,11 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/login', authRoutes);         // NO `/api` here — Vercel already handles `/api`
+// Routes (No `/api` prefix here!)
+app.use('/login', authRoutes);
 app.use('/boards', boardRoutes);
 
+// Health Check
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
