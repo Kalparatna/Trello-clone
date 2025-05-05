@@ -14,9 +14,9 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173','https://trello-clone-phi-snowy.vercel.app/login'], // Allow your frontend origin here
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allow necessary methods
-  credentials: true,  // If you're using cookies/session
+  origin: ['https://trello-clone-phi-snowy.vercel.app', 'http://localhost:5173'], // Replace with your frontend URLs
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed HTTP methods
+  credentials: true,  // Allow credentials (cookies)
 }));
 
 app.use(express.json());
