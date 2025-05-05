@@ -4,10 +4,7 @@ const mongoose = require('mongoose');
 let isConnected = false;
 
 const connectDB = async () => {
-  if (isConnected) {
-    return;
-  }
-
+  if (isConnected) return;
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
