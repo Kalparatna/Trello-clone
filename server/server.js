@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -8,22 +7,26 @@ const boardRoutes = require('./routes/boards');
 require('dotenv').config();
 
 const app = express();
+
+// Connect to MongoDB (cached)
 connectDB();
 
+// Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+  origin: 'http://localhost:5173', // Adjust according to your front-end settings
+  credentials: true,
 }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes (No `/api` prefix here!)
-app.use('/login', authRoutes);
-app.use('/boards', boardRoutes);
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/boards', boardRoutes);
 
-// Health Check
+// Default Route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// Export the app for serverless handling
 module.exports = app;
